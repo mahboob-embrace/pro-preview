@@ -222,7 +222,7 @@ const PropertyList = () => {
                   <Select value={countryFilter} onValueChange={setCountryFilter}>
                     <SelectTrigger>
                       <SelectValue placeholder="Country" />
-                    </SelectTrigR>
+                    </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="all">All Countries</SelectItem>
                       <SelectItem value="United States">United States</SelectItem>
