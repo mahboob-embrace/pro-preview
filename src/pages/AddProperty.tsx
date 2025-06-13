@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,8 +7,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, ArrowRight, Building2, MapPin, Upload, Plus, Trash2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, Building2, MapPin, Upload, Plus, Trash2, Bell, Calendar as CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Sidebar from "@/components/Sidebar";
 
 interface Owner {
   id: string;
@@ -19,6 +19,7 @@ interface Owner {
 }
 
 const AddProperty = () => {
+  const [activeTab, setActiveTab] = useState("add-property");
   const [currentStep, setCurrentStep] = useState(1);
   const [propertyData, setPropertyData] = useState({
     // Step 1: Core Information
@@ -757,43 +758,66 @@ const AddProperty = () => {
   );
 
   return (
-    <div className="min-h-screen bg-background p-6">
-      <div className="max-w-4xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-2">Add New Property</h1>
-          <p className="text-muted-foreground">Complete the form below to add a new property to your portfolio</p>
-        </div>
+    <div className="flex min-h-screen bg-background">
+      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+      
+      <div className="flex-1 flex flex-col">
+        {/* Header without search */}
+        <header className="bg-card border-b border-border px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-bold text-foreground">Add New Property</h1>
+              <p className="text-muted-foreground">Complete the form below to add a new property to your portfolio</p>
+            </div>
+            
+            <div className="flex items-center space-x-3">
+              <Button variant="outline" size="sm">
+                <CalendarIcon className="h-4 w-4 mr-2" />
+                Today
+              </Button>
+              
+              <Button variant="outline" size="sm" className="relative">
+                <Bell className="h-4 w-4" />
+                <span className="absolute -top-1 -right-1 h-2 w-2 bg-destructive rounded-full"></span>
+              </Button>
+            </div>
+          </div>
+        </header>
 
-        {renderProgressBar()}
+        <div className="flex-1 p-6">
+          <div className="max-w-4xl mx-auto">
+            {renderProgressBar()}
 
-        <div className="mb-8">
-          {currentStep === 1 && renderStep1()}
-          {currentStep === 2 && renderStep2()}
-          {currentStep === 3 && renderStep3()}
-          {currentStep === 4 && renderStep4()}
-          {currentStep === 5 && renderStep5()}
-        </div>
+            <div className="mb-8">
+              {currentStep === 1 && renderStep1()}
+              {currentStep === 2 && renderStep2()}
+              {currentStep === 3 && renderStep3()}
+              {currentStep === 4 && renderStep4()}
+              {currentStep === 5 && renderStep5()}
+            </div>
 
-        <div className="flex justify-between">
-          <Button
-            onClick={prevStep}
-            variant="outline"
-            disabled={currentStep === 1}
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Previous
-          </Button>
-          
-          {currentStep < 5 ? (
-            <Button onClick={nextStep}>
-              Next
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
-          ) : (
-            <Button onClick={() => console.log("Form completed")}>
-              Complete
-            </Button>
-          )}
+            <div className="flex justify-between">
+              <Button
+                onClick={prevStep}
+                variant="outline"
+                disabled={currentStep === 1}
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Previous
+              </Button>
+              
+              {currentStep < 5 ? (
+                <Button onClick={nextStep}>
+                  Next
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              ) : (
+                <Button onClick={() => console.log("Form completed")}>
+                  Complete
+                </Button>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>
