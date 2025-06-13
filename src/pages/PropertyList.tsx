@@ -8,7 +8,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Plus, Search, Edit, Eye, Building2, MapPin, Calendar, Bell } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "@/components/Sidebar";
-
 interface Property {
   id: string;
   name: string;
@@ -23,80 +22,72 @@ interface Property {
   currency: string;
   image: string;
 }
-
-const mockProperties: Property[] = [
-  {
-    id: "1",
-    name: "Parkview Tower",
-    type: "Commercial",
-    subType: "Office",
-    status: "Available",
-    city: "New York",
-    country: "United States",
-    buildingSize: 50000,
-    sizeUnit: "sq ft",
-    acquisitionValue: 25000000,
-    currency: "USD",
-    image: "/placeholder.svg"
-  },
-  {
-    id: "2",
-    name: "Sunset Apartments",
-    type: "Residential",
-    subType: "Apartment",
-    status: "Leased",
-    city: "Los Angeles",
-    country: "United States",
-    buildingSize: 75000,
-    sizeUnit: "sq ft",
-    acquisitionValue: 18500000,
-    currency: "USD",
-    image: "/placeholder.svg"
-  },
-  {
-    id: "3",
-    name: "Industrial Hub",
-    type: "Industrial",
-    subType: "Warehouse",
-    status: "Under Maintenance",
-    city: "Chicago",
-    country: "United States",
-    buildingSize: 120000,
-    sizeUnit: "sq ft",
-    acquisitionValue: 12000000,
-    currency: "USD",
-    image: "/placeholder.svg"
-  },
-  {
-    id: "4",
-    name: "Marina Plaza",
-    type: "Commercial",
-    subType: "Retail",
-    status: "Available",
-    city: "London",
-    country: "United Kingdom",
-    buildingSize: 35000,
-    sizeUnit: "sq ft",
-    acquisitionValue: 15000000,
-    currency: "GBP",
-    image: "/placeholder.svg"
-  },
-  {
-    id: "5",
-    name: "Green Valley Homes",
-    type: "Residential",
-    subType: "Single-Family Home",
-    status: "Leased",
-    city: "Karachi",
-    country: "Pakistan",
-    buildingSize: 25000,
-    sizeUnit: "sq ft",
-    acquisitionValue: 8000000,
-    currency: "PKR",
-    image: "/placeholder.svg"
-  }
-];
-
+const mockProperties: Property[] = [{
+  id: "1",
+  name: "Parkview Tower",
+  type: "Commercial",
+  subType: "Office",
+  status: "Available",
+  city: "New York",
+  country: "United States",
+  buildingSize: 50000,
+  sizeUnit: "sq ft",
+  acquisitionValue: 25000000,
+  currency: "USD",
+  image: "/placeholder.svg"
+}, {
+  id: "2",
+  name: "Sunset Apartments",
+  type: "Residential",
+  subType: "Apartment",
+  status: "Leased",
+  city: "Los Angeles",
+  country: "United States",
+  buildingSize: 75000,
+  sizeUnit: "sq ft",
+  acquisitionValue: 18500000,
+  currency: "USD",
+  image: "/placeholder.svg"
+}, {
+  id: "3",
+  name: "Industrial Hub",
+  type: "Industrial",
+  subType: "Warehouse",
+  status: "Under Maintenance",
+  city: "Chicago",
+  country: "United States",
+  buildingSize: 120000,
+  sizeUnit: "sq ft",
+  acquisitionValue: 12000000,
+  currency: "USD",
+  image: "/placeholder.svg"
+}, {
+  id: "4",
+  name: "Marina Plaza",
+  type: "Commercial",
+  subType: "Retail",
+  status: "Available",
+  city: "London",
+  country: "United Kingdom",
+  buildingSize: 35000,
+  sizeUnit: "sq ft",
+  acquisitionValue: 15000000,
+  currency: "GBP",
+  image: "/placeholder.svg"
+}, {
+  id: "5",
+  name: "Green Valley Homes",
+  type: "Residential",
+  subType: "Single-Family Home",
+  status: "Leased",
+  city: "Karachi",
+  country: "Pakistan",
+  buildingSize: 25000,
+  sizeUnit: "sq ft",
+  acquisitionValue: 8000000,
+  currency: "PKR",
+  image: "/placeholder.svg"
+}];
 const PropertyList = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("properties");
@@ -104,29 +95,24 @@ const PropertyList = () => {
   const [typeFilter, setTypeFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
   const [countryFilter, setCountryFilter] = useState("all");
-
   const filteredProperties = useMemo(() => {
     return mockProperties.filter(property => {
-      const matchesSearch = property.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           property.city.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesSearch = property.name.toLowerCase().includes(searchTerm.toLowerCase()) || property.city.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesType = typeFilter === "all" || property.type.toLowerCase() === typeFilter;
       const matchesStatus = statusFilter === "all" || property.status.toLowerCase().replace(" ", "-") === statusFilter;
       const matchesCountry = countryFilter === "all" || property.country === countryFilter;
-      
       return matchesSearch && matchesType && matchesStatus && matchesCountry;
     });
   }, [searchTerm, typeFilter, statusFilter, countryFilter]);
-
   const formatCurrency = (value: number, currency: string) => {
     const formatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: currency,
       minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
+      maximumFractionDigits: 0
     });
     return formatter.format(value);
   };
-
   const getStatusColor = (status: Property['status']) => {
     switch (status) {
       case "Available":
@@ -139,9 +125,7 @@ const PropertyList = () => {
         return "bg-gray-100 text-gray-800 border-gray-200";
     }
   };
-
-  return (
-    <div className="flex min-h-screen bg-background">
+  return <div className="flex min-h-screen bg-background">
       <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
       
       <div className="flex-1 flex flex-col">
@@ -178,15 +162,10 @@ const PropertyList = () => {
             </div>
 
             {/* Filters without Card wrapper */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 p-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 p-6 px-px py-0">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search by name, city..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
-                />
+                <Input placeholder="Search by name, city..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="pl-10" />
               </div>
               
               <Select value={typeFilter} onValueChange={setTypeFilter}>
@@ -235,20 +214,12 @@ const PropertyList = () => {
               <CardContent>
                 {/* Mobile/Tablet Card View */}
                 <div className="block md:hidden space-y-4">
-                  {filteredProperties.length === 0 ? (
-                    <div className="text-center py-8 text-muted-foreground">
+                  {filteredProperties.length === 0 ? <div className="text-center py-8 text-muted-foreground">
                       <Building2 className="h-12 w-12 mx-auto mb-4 opacity-50" />
                       <p>No properties found matching your criteria.</p>
-                    </div>
-                  ) : (
-                    filteredProperties.map((property) => (
-                      <Card key={property.id} className="overflow-hidden">
+                    </div> : filteredProperties.map(property => <Card key={property.id} className="overflow-hidden">
                         <div className="aspect-video bg-muted relative overflow-hidden">
-                          <img 
-                            src={property.image} 
-                            alt={property.name}
-                            className="w-full h-full object-cover"
-                          />
+                          <img src={property.image} alt={property.name} className="w-full h-full object-cover" />
                         </div>
                         <CardContent className="p-4">
                           <div className="flex justify-between items-start mb-2">
@@ -289,20 +260,15 @@ const PropertyList = () => {
                             </Button>
                           </div>
                         </CardContent>
-                      </Card>
-                    ))
-                  )}
+                      </Card>)}
                 </div>
 
                 {/* Desktop Table View */}
                 <div className="hidden md:block">
-                  {filteredProperties.length === 0 ? (
-                    <div className="text-center py-8 text-muted-foreground">
+                  {filteredProperties.length === 0 ? <div className="text-center py-8 text-muted-foreground">
                       <Building2 className="h-12 w-12 mx-auto mb-4 opacity-50" />
                       <p>No properties found matching your criteria.</p>
-                    </div>
-                  ) : (
-                    <Table>
+                    </div> : <Table>
                       <TableHeader>
                         <TableRow>
                           <TableHead>Property</TableHead>
@@ -315,15 +281,10 @@ const PropertyList = () => {
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {filteredProperties.map((property) => (
-                          <TableRow key={property.id}>
+                        {filteredProperties.map(property => <TableRow key={property.id}>
                             <TableCell>
                               <div className="flex items-center gap-3">
-                                <img 
-                                  src={property.image} 
-                                  alt={property.name}
-                                  className="w-12 h-12 rounded-lg object-cover bg-muted"
-                                />
+                                <img src={property.image} alt={property.name} className="w-12 h-12 rounded-lg object-cover bg-muted" />
                                 <div>
                                   <p className="font-medium">{property.name}</p>
                                 </div>
@@ -355,19 +316,15 @@ const PropertyList = () => {
                                 </Button>
                               </div>
                             </TableCell>
-                          </TableRow>
-                        ))}
+                          </TableRow>)}
                       </TableBody>
-                    </Table>
-                  )}
+                    </Table>}
                 </div>
               </CardContent>
             </Card>
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default PropertyList;
