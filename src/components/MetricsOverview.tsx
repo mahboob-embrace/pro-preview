@@ -44,6 +44,15 @@ const MetricsOverview = () => {
         const Icon = metric.icon;
         const TrendIcon = metric.trend === "up" ? TrendingUp : TrendingDown;
         
+        // For maintenance requests, decreasing trend is positive (green), increasing is negative (red)
+        const isMaintenanceRequests = metric.title === "Maintenance Requests";
+        const getTrendColor = () => {
+          if (isMaintenanceRequests) {
+            return metric.trend === "down" ? "text-green-600" : "text-red-600";
+          }
+          return metric.trend === "up" ? "text-green-600" : "text-red-600";
+        };
+        
         return (
           <Card key={index} className="hover:shadow-md transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -57,12 +66,8 @@ const MetricsOverview = () => {
                 {metric.value}
               </div>
               <div className="flex items-center text-xs">
-                <TrendIcon className={`h-3 w-3 mr-1 ${
-                  metric.trend === "up" ? "text-green-600" : "text-red-600"
-                }`} />
-                <span className={`${
-                  metric.trend === "up" ? "text-green-600" : "text-red-600"
-                }`}>
+                <TrendIcon className={`h-3 w-3 mr-1 ${getTrendColor()}`} />
+                <span className={getTrendColor()}>
                   {metric.change}
                 </span>
                 <span className="text-muted-foreground ml-1">from last month</span>
