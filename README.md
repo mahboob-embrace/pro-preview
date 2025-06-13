@@ -27,7 +27,7 @@ Follow these steps:
 git clone <YOUR_GIT_URL>
 
 # Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+cd pro-preview
 
 # Step 3: Install the necessary dependencies.
 npm i
@@ -71,3 +71,20 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+
+
+# Build the Docker image
+docker build -t pro-preview .
+
+# Test locally (optional)
+docker run -p 8080:8080 pro-preview
+
+# Tag and push to Google Container Registry
+docker tag pro-preview gcr.io/gen-lang-client-0530904290/pro-preview
+docker push gcr.io/gen-lang-client-0530904290/pro-preview
+
+# Deploy to Cloud Run
+gcloud run deploy pro-preview \
+  --image gcr.io/gen-lang-client-0530904290/pro-preview \
+  --platform managed \
+  --allow-unauthenticated
