@@ -1,9 +1,8 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
-import { Clock, Activity, Utensils, Moon, Zap, Heart } from 'lucide-react';
+import { Clock, Activity, Utensils, Moon, Zap, Heart, Bed, AlarmClock } from 'lucide-react';
 import { HealthSidebar } from '@/components/HealthSidebar';
 import DashboardHeader from '@/components/DashboardHeader';
 import { SidebarProvider } from '@/components/ui/sidebar';
@@ -23,6 +22,9 @@ const HealthDashboard = () => {
   const sleepData = {
     totalSleep: '7h 45m',
     sleepScore: 87,
+    bedtime: '22:00',
+    alarmTime: '07:00',
+    actualWakeTime: '06:45',
     stages: [
       { name: 'Deep', value: 25, color: '#3b82f6' },
       { name: 'Light', value: 55, color: '#60a5fa' },
@@ -92,7 +94,7 @@ const HealthDashboard = () => {
 
             {/* Key Data Cards - Top Section */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-              {/* Sleep Activity Card */}
+              {/* Sleep Activity Card - Redesigned */}
               <Card className="bg-white shadow-lg">
                 <CardHeader className="pb-3">
                   <CardTitle className="flex items-center gap-2 text-lg">
@@ -100,62 +102,74 @@ const HealthDashboard = () => {
                     Sleep Activity
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="text-center">
-                    <div className="text-3xl font-bold text-blue-600 mb-1">
-                      {sleepData.totalSleep}
-                    </div>
-                    <p className="text-sm text-gray-600">Last night's sleep</p>
-                  </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium">Sleep Score</span>
-                    <Badge variant="secondary" className="bg-blue-100 text-blue-800">
-                      {sleepData.sleepScore}/100
-                    </Badge>
-                  </div>
-                  
-                  <Progress value={sleepData.sleepScore} className="h-2" />
-                  
-                  <div className="flex justify-center">
-                    <ChartContainer
-                      config={{
-                        deep: { label: "Deep", color: "#3b82f6" },
-                        light: { label: "Light", color: "#60a5fa" },
-                        rem: { label: "REM", color: "#93c5fd" }
-                      }}
-                      className="h-32 w-32"
-                    >
-                      <ResponsiveContainer width="100%" height="100%">
-                        <PieChart>
-                          <Pie
-                            data={sleepData.stages}
-                            cx="50%"
-                            cy="50%"
-                            innerRadius={25}
-                            outerRadius={50}
-                            dataKey="value"
-                          >
-                            {sleepData.stages.map((entry, index) => (
-                              <Cell key={`cell-${index}`} fill={entry.color} />
-                            ))}
-                          </Pie>
-                          <ChartTooltip content={<ChartTooltipContent />} />
-                        </PieChart>
-                      </ResponsiveContainer>
-                    </ChartContainer>
-                  </div>
-                  
-                  <div className="flex justify-center space-x-4 text-xs">
-                    {sleepData.stages.map((stage) => (
-                      <div key={stage.name} className="flex items-center gap-1">
-                        <div 
-                          className="w-3 h-3 rounded-full" 
-                          style={{ backgroundColor: stage.color }}
-                        ></div>
-                        <span>{stage.name}: {stage.value}%</span>
+                <CardContent className="space-y-6">
+                  {/* Circular Sleep Timer */}
+                  <div className="flex items-center justify-center">
+                    <div className="relative w-40 h-40">
+                      {/* Background Circle */}
+                      <svg className="w-40 h-40 transform -rotate-90" viewBox="0 0 100 100">
+                        <circle
+                          cx="50"
+                          cy="50"
+                          r="45"
+                          stroke="#e5e7eb"
+                          strokeWidth="8"
+                          fill="transparent"
+                        />
+                        <circle
+                          cx="50"
+                          cy="50"
+                          r="45"
+                          stroke="#3b82f6"
+                          strokeWidth="8"
+                          fill="transparent"
+                          strokeDasharray={`${(sleepData.sleepScore / 100) * 283} 283`}
+                          strokeLinecap="round"
+                          className="transition-all duration-1000 ease-out"
+                        />
+                      </svg>
+                      {/* Center Content */}
+                      <div className="absolute inset-0 flex flex-col items-center justify-center">
+                        <div className="text-2xl font-bold text-gray-900">
+                          7hr
+                        </div>
+                        <div className="text-sm text-gray-500">
+                          30min
+                        </div>
                       </div>
-                    ))}
+                      {/* Moon Icon */}
+                      <div className="absolute -top-2 right-8">
+                        <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                          <Moon className="h-4 w-4 text-white" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Sleep Details */}
+                  <div className="grid grid-cols-3 gap-4 text-center">
+                    <div className="flex flex-col items-center space-y-1">
+                      <Bed className="h-4 w-4 text-blue-600" />
+                      <span className="text-xs text-gray-500">Bedtime</span>
+                      <span className="text-sm font-semibold text-gray-900">{sleepData.bedtime}</span>
+                    </div>
+                    <div className="flex flex-col items-center space-y-1">
+                      <AlarmClock className="h-4 w-4 text-orange-500" />
+                      <span className="text-xs text-gray-500">Alarm</span>
+                      <span className="text-sm font-semibold text-gray-900">{sleepData.alarmTime}</span>
+                    </div>
+                    <div className="flex flex-col items-center space-y-1">
+                      <Moon className="h-4 w-4 text-green-600" />
+                      <span className="text-xs text-gray-500">Siesta</span>
+                      <span className="text-sm font-semibold text-gray-900">12:50</span>
+                    </div>
+                  </div>
+
+                  {/* Sleep Score Badge */}
+                  <div className="flex justify-center">
+                    <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+                      Sleep Score: {sleepData.sleepScore}/100
+                    </Badge>
                   </div>
                 </CardContent>
               </Card>
