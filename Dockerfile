@@ -9,7 +9,7 @@ RUN npm run build
 
 # Stage 2: Serve the static files with a lightweight web server
 FROM nginx:stable-alpine
-COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /app/dist /usr/share/nginx/html
 # Copy a custom Nginx configuration if needed
 # COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
