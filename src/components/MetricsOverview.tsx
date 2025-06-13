@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { TrendingUp, TrendingDown, Building2, Users, DollarSign, AlertTriangle } from "lucide-react";
+import { TrendingUp, TrendingDown, Building2, Users, DollarSign, HardHat } from "lucide-react";
 
 const metrics = [
   {
@@ -32,7 +32,7 @@ const metrics = [
     value: "23",
     change: "-15%",
     trend: "down",
-    icon: AlertTriangle,
+    icon: HardHat,
     color: "text-orange-600"
   }
 ];
