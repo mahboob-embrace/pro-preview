@@ -2,13 +2,15 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus, FileText, Users, Wrench, DollarSign, BarChart3 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const actions = [
   {
     title: "Add Property",
     description: "Register new property",
     icon: Plus,
-    color: "bg-blue-500 hover:bg-blue-600"
+    color: "bg-blue-500 hover:bg-blue-600",
+    path: "/add-property"
   },
   {
     title: "New Contract",
@@ -43,6 +45,14 @@ const actions = [
 ];
 
 const QuickActions = () => {
+  const navigate = useNavigate();
+
+  const handleActionClick = (action: typeof actions[0]) => {
+    if (action.path) {
+      navigate(action.path);
+    }
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -57,6 +67,7 @@ const QuickActions = () => {
                 key={index}
                 variant="outline"
                 className="h-auto p-4 flex flex-col items-center space-y-2 hover:shadow-md transition-all"
+                onClick={() => handleActionClick(action)}
               >
                 <div className={`w-8 h-8 rounded-lg ${action.color} flex items-center justify-center`}>
                   <Icon className="h-4 w-4 text-white" />
