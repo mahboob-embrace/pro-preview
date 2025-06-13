@@ -1,22 +1,20 @@
-# Welcome to your Lovable project
+# Property Preview AI Insights
 
-## Project info
+## Project Overview
 
-**URL**: https://lovable.dev/projects/dc3da87e-e7c0-4708-acf4-d7b9a7228db9
+This is a property preview application with AI-powered insights.
 
 ## How can I edit this code?
 
-There are several ways of editing your application.
+There are several ways to work with this project:
 
-**Use Lovable**
+**Using your preferred IDE**
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/dc3da87e-e7c0-4708-acf4-d7b9a7228db9) and start prompting.
+Clone this repository and open it in your preferred IDE. Make your changes and push them to your repository.
 
-Changes made via Lovable will be committed automatically to this repo.
+**Using GitHub Codespaces**
 
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+You can also work on this project using GitHub Codespaces:
 
 The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
@@ -62,15 +60,19 @@ This project is built with:
 
 ## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/dc3da87e-e7c0-4708-acf4-d7b9a7228db9) and click on Share -> Publish.
+This project can be deployed using Docker:
 
-## Can I connect a custom domain to my Lovable project?
+```bash
+# Build the Docker image
+docker build -t pro-preview .
 
-Yes, you can!
+# Run the container
+docker run -p 8080:8080 pro-preview
+```
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Custom Domain Setup
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+To use a custom domain with your deployment, configure your DNS settings to point to your hosting provider and set up the appropriate SSL certificates.
 
 
 # Build the Docker image
