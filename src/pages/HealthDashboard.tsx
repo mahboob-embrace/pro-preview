@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Clock, Activity, Utensils, Moon, Zap, Heart } from 'lucide-react';
-import Sidebar from '@/components/Sidebar';
+import { HealthSidebar } from '@/components/HealthSidebar';
 import DashboardHeader from '@/components/DashboardHeader';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
@@ -77,7 +77,7 @@ const HealthDashboard = () => {
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full bg-gray-50">
-        <Sidebar />
+        <HealthSidebar />
         <div className="flex-1">
           <DashboardHeader />
           <main className="p-6 space-y-6">
